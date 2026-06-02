@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import Logo from '@/assets/logo.png';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,11 +17,7 @@ const Navbar = () => {
                         {/* Left: Logo */}
                         <div className="flex-shrink-0 flex items-center">
                             <Link href="/" className="flex items-center gap-1 font-bold text-2xl tracking-tight">
-                                <span className="text-[#0088ff]">hire</span>
-                                <span className="inline-flex items-center justify-center bg-gradient-to-tr from-[#0088ff] to-[#ff5500] text-transparent bg-clip-text font-black">
-                                    ⟳
-                                </span>
-                                <span className="text-[#ff7700]">op</span>
+                                <Image src={Logo} alt='HireLoop Logo' width={130} height={32}/>
                             </Link>
                         </div>
 
