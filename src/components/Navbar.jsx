@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="fixed top-4 left-0 right-0 w-full z-50 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <nav className="bg-[#161616]/80 backdrop-blur-md border border-zinc-800/60 text-white rounded-2xl px-6 sm:px-8 transition-all duration-300 shadow-2xl">
-                    <div className="flex items-center justify-between h-20">
+                    <div className="flex items-center justify-between h-18">
 
                         {/* Left: Logo */}
                         <div className="flex-shrink-0 flex items-center">
@@ -37,7 +37,7 @@ const Navbar = () => {
                             </div>
 
                             {/* Divider Line */}
-                            <span className="h-5 w-[1px] bg-zinc-800" aria-hidden="true"></span>
+                            <span className="h-5 w-[1px] bg-zinc-600" aria-hidden="true"></span>
 
                             {/* Auth Buttons */}
                             <div className="flex items-center gap-6 text-sm font-medium">
