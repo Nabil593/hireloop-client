@@ -41,7 +41,7 @@ const Navbar = () => {
 
                             {/* Auth Buttons */}
                             <div className="flex items-center gap-6 text-sm font-medium">
-                                <Link href="/sign-in" className="text-[#6366f1] hover:text-[#4f46e5] transition-colors duration-200">
+                                <Link href="/auth/signup" className="text-[#6366f1] hover:text-[#4f46e5] transition-colors duration-200">
                                     Sign In
                                 </Link>
                                 <Link
@@ -96,7 +96,7 @@ const Navbar = () => {
                         </Link>
 
                         <div className="pt-4 border-t border-zinc-800 flex flex-col gap-3">
-                            <Link href="/sign-in" className="text-[#6366f1] py-2 text-center hover:text-[#4f46e5] transition-colors">
+                            <Link href="/auth/signup" className="text-[#6366f1] py-2 text-center hover:text-[#4f46e5] transition-colors">
                                 Sign In
                             </Link>
                             <Link

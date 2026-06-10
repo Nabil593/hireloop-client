@@ -2,108 +2,98 @@ import React from 'react';
 import BacgroundImage from '@/assets/globe.png';
 
 const StatSection = () => {
+    // Stats cards array for cleaner code management
+    const statsData = [
+        {
+            id: 1,
+            value: "50K",
+            label: "Active Jobs",
+            icon: (
+                <svg className="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 .621-.504 1.125-1.125 1.125H4.875c-.621 0-1.125-.504-1.125-1.125v-4.25m16.5 0a2.25 2.25 0 00-1.875-2.217m-12.75 0a2.25 2.25 0 00-1.875 2.217m16.5 0c.241-.04.482-.084.722-.132A1.125 1.125 0 0021 12.872V6.75a1.125 1.125 0 00-1.125-1.125H5.125A1.125 1.125 0 004 6.75v6.122c0 .539.381 1.002.903 1.106a46.46 46.46 0 00.722.132m12.75 0a48.667 48.667 0 00-12.75 0M8.25 9.75h7.5" />
+                </svg>
+            )
+        },
+        {
+            id: 2,
+            value: "12K",
+            label: "Companies",
+            icon: (
+                <svg className="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h18" />
+                </svg>
+            )
+        },
+        {
+            id: 3,
+            value: "2M",
+            label: "Job Seekers",
+            icon: (
+                <svg className="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            )
+        },
+        {
+            id: 4,
+            value: "97%",
+            label: "Satisfaction Rate",
+            icon: (
+                <svg className="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499c.151-.316.604-.316.754 0l1.98 4.015 4.425.642c.35.051.49.483.236.73L15.66 12.04l.76 4.407c.06.347-.306.613-.616.45L12 14.845l-3.961 2.082c-.31.163-.67-.103-.61-.45l.76-4.407-3.185-3.103c-.246-.24-.106-.673.236-.73l4.425-.641 1.98-4.015z" />
+                </svg>
+            )
+        }
+    ];
+
     return (
-        <section className="relative w-full bg-black text-white min-h-[85vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden pt-50 pb-40">
+        <section className="w-full bg-black text-white py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
 
-            {/* Background Ambient Glows */}
-            {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.12)_0%,transparent_60%)] pointer-events-none" /> */}
-            {/* <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-40 bg-[radial-gradient(circle_at_bottom,rgba(99,102,241,0.15)_0%,transparent_70%)] pointer-events-none" /> */}
-
-            {/* Ambient Stars / Dots effect simulation */}
-            {/* <div className="absolute inset-0 opacity-40 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)] pointer-events-none" /> */}
             <div className='absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90'
-                           style={{ backgroundImage: `url(${BacgroundImage.src})` }}
+                style={{ backgroundImage: `url(${BacgroundImage.src})` }}
             />
 
-            {/* Inner Content Wrapper */}
-            <div className="relative max-w-4xl mx-auto flex flex-col items-center text-center z-10">
-
-                {/* 1. Top Stat Badge / Pill */}
-                <div className="relative inline-flex items-center gap-2.5 bg-[#121212]/90 border border-zinc-800/80 rounded-full px-5 py-2.5 shadow-[0_0_30px_rgba(255,255,255,0.02)] backdrop-blur-sm mb-8 group transition-all duration-300">
-                    {/* Subtle Glow Lines on sides */}
-                    <span className="absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-[1px] bg-gradient-to-r from-transparent to-zinc-700" />
-                    <span className="absolute -right-8 top-1/2 -translate-y-1/2 w-6 h-[1px] bg-gradient-to-l from-transparent to-zinc-700" />
-
-                    {/* Briefcase Emoji / Icon */}
-                    <span className="text-base">💼</span>
-
-                    {/* Stat Text */}
-                    <p className="text-xs sm:text-sm font-medium tracking-wide">
-                        <span className="text-white font-bold font-mono">50,000+</span>{" "}
-                        <span className="text-zinc-500 font-semibold tracking-wider text-[11px] sm:text-xs uppercase">
-                            New Jobs This Month
-                        </span>
-                    </p>
-                </div>
-
-                {/* 2. Main Hero Heading */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-6 max-w-3xl leading-[1.15]">
-                    Find Your Dream Job Today
-                </h1>
-
-                {/* 3. Subtitle Description */}
-                <p className="text-zinc-400 text-base sm:text-lg md:text-xl font-normal max-w-2xl mb-12 leading-relaxed">
-                    HireLoop connects top talent with world-class companies. Browse thousands of
-                    curated opportunities and land your next role — faster.
-                </p>
-
-                {/* 4. Responsive Search Bar Input Container */}
-                <div className="w-full max-w-3xl bg-[#111111]/95 border border-zinc-800/80 rounded-2xl md:rounded-full p-2 md:p-2.5 flex flex-col md:flex-row items-center gap-2 md:gap-4 shadow-[0_10px_50px_rgba(0,0,0,0.8)] backdrop-blur-md focus-within:border-zinc-700/80 transition-colors mb-8">
-
-                    {/* Left Field: Job Title */}
-                    <div className="w-full flex items-center gap-3 px-3 py-2 md:py-0 md:pl-4 border-b border-zinc-800/60 md:border-b-0 md:flex-1">
-                        <svg className="w-5 h-5 text-zinc-500 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        <input
-                            type="text"
-                            placeholder="Job title, skill or company"
-                            className="w-full bg-transparent text-sm text-white placeholder-zinc-600 focus:outline-none"
-                        />
-                    </div>
-
-                    {/* Divider for desktop */}
-                    <span className="hidden md:block h-6 w-[1px] bg-zinc-800" aria-hidden="true" />
-
-                    {/* Right Field: Location */}
-                    <div className="w-full flex items-center gap-3 px-3 py-2 md:py-0 md:flex-1">
-                        <svg className="w-5 h-5 text-zinc-500 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <input
-                            type="text"
-                            placeholder="Location or Remote"
-                            className="w-full bg-transparent text-sm text-white placeholder-zinc-600 focus:outline-none"
-                        />
-                    </div>
-
-                    {/* Blue Search Button */}
-                    <button
-                        type="button"
-                        className="w-full md:w-auto bg-[#4f46e5] hover:bg-[#5a52e6] text-white p-3.5 md:p-4 rounded-xl md:rounded-full flex items-center justify-center shrink-0 transition-all duration-200 shadow-[0_4px_20px_rgba(79,70,229,0.4)] active:scale-98"
-                    >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </button>
-                </div>
-
-                {/* 5. Trending Tags */}
-                <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm">
-                    <span className="text-zinc-500 font-medium mr-1">Trending Position</span>
-                    <button className="bg-[#161616] hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-1.5 rounded-full transition-colors">
-                        Product Designer
-                    </button>
-                    <button className="bg-[#161616] hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-1.5 rounded-full transition-colors">
-                        AI Engineering
-                    </button>
-                    <button className="bg-[#161616] hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-1.5 rounded-full transition-colors">
-                        Dev-ops Engineer
-                    </button>
-                </div>
-
+            {/* Top Typography Header */}
+            <div className="max-w-3xl mx-auto text-center mb-16 relative z-10">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-normal text-zinc-300 leading-snug">
+                    Assisting over{" "}
+                    <span className="text-white font-semibold underline decoration-[#4f46e5] decoration-2 underline-offset-4">
+                        15,000 job seekers
+                    </span>{" "}
+                    <br className="hidden sm:inline" />
+                    find their dream positions.
+                </h2>
             </div>
+
+            {/* Responsive Stats Cards Grid */}
+            <div className="max-w-7xl mx-auto relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    {statsData.map((stat) => (
+                        <div
+                            key={stat.id}
+                            className="bg-[#0d0d0d] border border-zinc-900/80 rounded-2xl p-7 flex flex-col justify-between min-h-[190px] shadow-[0_4px_30px_rgba(0,0,0,0.4)] hover:border-zinc-800 transition-all duration-300 group"
+                        >
+                            {/* Icon Top Row */}
+                            <div className="w-9 h-9 rounded-xl bg-zinc-900/50 border border-zinc-800/40 flex items-center justify-center group-hover:bg-zinc-900 transition-colors">
+                                {stat.icon}
+                            </div>
+
+                            {/* Stat Numbers & Label Bottom Area */}
+                            <div className="mt-8 space-y-1">
+                                <span className="block text-4xl md:text-5xl font-bold tracking-tight text-white font-sans">
+                                    {stat.value}
+                                </span>
+                                <span className="block text-xs md:text-sm text-zinc-500 font-medium tracking-wide">
+                                    {stat.label}
+                                </span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Ambient Background Radial Blur Effect Layer */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-64 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.06)_0%,transparent_70%)] pointer-events-none" />
         </section>
     );
 };
