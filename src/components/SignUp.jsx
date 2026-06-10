@@ -1,9 +1,44 @@
 "use client";
+import { authClient } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
+
+    const router = useRouter();
     // State to toggle password visibility
     const [showPassword, setShowPassword] = useState(false);
+
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+
+    const handleSignUp = async (data) => {
+
+        const { email, name, photo, password } = data
+
+        // console.log(data)
+
+        const { data: res, error } = await authClient.signUp.email({
+            name: name,
+            email: email,
+            password: password,
+            image: photo,
+        });
+
+        if (error) {
+            toast.error(error.message);
+        } else {
+            toast.success("Account created successfully!");
+            router.push("/auth/signin");
+        }
+    };
 
     return (
         <div className="py-30 bg-[#030303] text-gray-200 flex items-center justify-center relative overflow-hidden font-sans selection:bg-indigo-500 selection:text-white">
@@ -28,7 +63,7 @@ const SignUp = () => {
                 <div className="bg-[#0A0A0A]/80 backdrop-blur-md border border-neutral-900 rounded-xl p-8 shadow-2xl shadow-black/50">
 
                     {/* Form Layout */}
-                    <form className="space-y-4">
+                    <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
                         <div>
                             <label className="block text-[11px] font-medium text-neutral-400 mb-1.5 tracking-wide uppercase">
                                 Full Name
@@ -36,6 +71,7 @@ const SignUp = () => {
                             <input
                                 type="text"
                                 placeholder="John Doe"
+                                {...register("name", { required: "Name field is required" })}
                                 className="w-full bg-[#121212] border border-neutral-900 focus:border-indigo-500/50 text-sm text-white h-11 px-4 rounded-lg outline-none transition-all placeholder:text-neutral-700 focus:ring-1 focus:ring-indigo-500/20"
                                 required
                             />
@@ -48,6 +84,7 @@ const SignUp = () => {
                             <input
                                 type="email"
                                 placeholder="name@domain.com"
+                                {...register("email", { required: "Email field is required" })}
                                 className="w-full bg-[#121212] border border-neutral-900 focus:border-indigo-500/50 text-sm text-white h-11 px-4 rounded-lg outline-none transition-all placeholder:text-neutral-700 focus:ring-1 focus:ring-indigo-500/20"
                                 required
                             />
@@ -62,6 +99,7 @@ const SignUp = () => {
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
+                                    {...register("password", { required: "Password field is required" })}
                                     className="w-full bg-[#121212] border border-neutral-900 focus:border-indigo-500/50 text-sm text-white h-11 pl-4 pr-11 rounded-lg outline-none transition-all placeholder:text-neutral-700 focus:ring-1 focus:ring-indigo-500/20"
                                     required
                                 />
