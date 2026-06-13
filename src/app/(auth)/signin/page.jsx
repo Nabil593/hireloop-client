@@ -161,7 +161,7 @@ const SignInPage = () => {
                 {/* Footer Link */}
                 <p className="text-center text-xs text-neutral-500 mt-6">
                     Don't have an account?{' '}
-                    <a href="/auth/signup" className="text-white hover:text-indigo-400 font-medium transition-colors">
+                    <a href="/signup" className="text-white hover:text-indigo-400 font-medium transition-colors">
                         Sign up
                     </a>
                 </p>

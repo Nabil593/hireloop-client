@@ -6,30 +6,35 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 const SignUp = () => {
-
     const router = useRouter();
-    // State to toggle password visibility
     const [showPassword, setShowPassword] = useState(false);
-
 
     const {
         register,
         handleSubmit,
         watch,
+        setValue,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            role: 'seeker' // Default value sets to Job Seeker
+        }
+    });
+
+    // Tracking active role for custom UI styles
+    const selectedRole = watch('role');
 
     const handleSignUp = async (data) => {
-
-        const { email, name, photo, password } = data
-
-        // console.log(data)
+        const { email, name, password, role } = data;
 
         const { data: res, error } = await authClient.signUp.email({
             name: name,
             email: email,
             password: password,
-            image: photo,
+            // BetterAuth allows custom fields passed directly inside the standard schema or mapped to custom metadata
+            data: {
+                role: role
+            }
         });
 
         if (error) {
@@ -41,7 +46,7 @@ const SignUp = () => {
     };
 
     return (
-        <div className="py-30 bg-[#030303] text-gray-200 flex items-center justify-center relative overflow-hidden font-sans selection:bg-indigo-500 selection:text-white">
+        <div className="py-20 bg-[#030303] text-gray-200 flex items-center justify-center relative overflow-hidden font-sans selection:bg-indigo-500 selection:text-white min-h-screen">
             {/* Top Gradient Glow */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-gradient-to-b from-indigo-900/20 to-transparent blur-[120px] pointer-events-none" />
 
@@ -50,12 +55,12 @@ const SignUp = () => {
 
             <div className="w-full max-w-[440px] mx-4 z-10">
                 {/* Logo & Header */}
-                <div className="text-center mb-8">
+                <div className="text-center mb-6">
                     <h2 className="text-2xl font-semibold tracking-tight text-white mb-1">
                         Create your account
                     </h2>
                     <p className="text-xs text-gray-500">
-                        Join over 15,000+ job seekers finding dream positions.
+                        Join over 15,000+ users finding and hiring talent.
                     </p>
                 </div>
 
@@ -64,6 +69,39 @@ const SignUp = () => {
 
                     {/* Form Layout */}
                     <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
+
+                        {/* Role Selection Tabs */}
+                        <div>
+                            <label className="block text-[11px] font-medium text-neutral-400 mb-2 tracking-wide uppercase">
+                                I want to register as a
+                            </label>
+                            <div className="grid grid-cols-2 gap-2 bg-[#121212] p-1 rounded-lg border border-neutral-900">
+                                <button
+                                    type="button"
+                                    onClick={() => setValue('role', 'seeker')}
+                                    className={`py-2 text-xs font-medium rounded-md transition-all duration-200 ${selectedRole === 'seeker'
+                                            ? 'bg-indigo-600 text-white shadow-md'
+                                            : 'text-neutral-400 hover:text-neutral-200'
+                                        }`}
+                                >
+                                    Job Seeker
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setValue('role', 'recruiter')}
+                                    className={`py-2 text-xs font-medium rounded-md transition-all duration-200 ${selectedRole === 'recruiter'
+                                            ? 'bg-indigo-600 text-white shadow-md'
+                                            : 'text-neutral-400 hover:text-neutral-200'
+                                        }`}
+                                >
+                                    Recruiter
+                                </button>
+                            </div>
+                            {/* Hidden input field to capture react-hook-form registry mapping */}
+                            <input type="hidden" {...register("role")} />
+                        </div>
+
+                        {/* Full Name */}
                         <div>
                             <label className="block text-[11px] font-medium text-neutral-400 mb-1.5 tracking-wide uppercase">
                                 Full Name
@@ -73,10 +111,11 @@ const SignUp = () => {
                                 placeholder="John Doe"
                                 {...register("name", { required: "Name field is required" })}
                                 className="w-full bg-[#121212] border border-neutral-900 focus:border-indigo-500/50 text-sm text-white h-11 px-4 rounded-lg outline-none transition-all placeholder:text-neutral-700 focus:ring-1 focus:ring-indigo-500/20"
-                                required
                             />
+                            {errors.name && <p className="text-[11px] text-red-500 mt-1">{errors.name.message}</p>}
                         </div>
 
+                        {/* Email Address */}
                         <div>
                             <label className="block text-[11px] font-medium text-neutral-400 mb-1.5 tracking-wide uppercase">
                                 Email Address
@@ -86,22 +125,21 @@ const SignUp = () => {
                                 placeholder="name@domain.com"
                                 {...register("email", { required: "Email field is required" })}
                                 className="w-full bg-[#121212] border border-neutral-900 focus:border-indigo-500/50 text-sm text-white h-11 px-4 rounded-lg outline-none transition-all placeholder:text-neutral-700 focus:ring-1 focus:ring-indigo-500/20"
-                                required
                             />
+                            {errors.email && <p className="text-[11px] text-red-500 mt-1">{errors.email.message}</p>}
                         </div>
 
+                        {/* Password */}
                         <div>
                             <label className="block text-[11px] font-medium text-neutral-400 mb-1.5 tracking-wide uppercase">
                                 Password
                             </label>
-                            {/* Wrapper container for absolute button alignment */}
                             <div className="relative flex items-center">
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
                                     {...register("password", { required: "Password field is required" })}
                                     className="w-full bg-[#121212] border border-neutral-900 focus:border-indigo-500/50 text-sm text-white h-11 pl-4 pr-11 rounded-lg outline-none transition-all placeholder:text-neutral-700 focus:ring-1 focus:ring-indigo-500/20"
-                                    required
                                 />
                                 <button
                                     type="button"
@@ -110,7 +148,6 @@ const SignUp = () => {
                                     aria-label={showPassword ? "Hide password" : "Show password"}
                                 >
                                     {showPassword ? (
-                                        /* Eye Off Icon */
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
                                             <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
@@ -118,7 +155,6 @@ const SignUp = () => {
                                             <line x1="2" x2="22" y1="2" y2="22" />
                                         </svg>
                                     ) : (
-                                        /* Eye Icon */
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                                             <circle cx="12" cy="12" r="3" />
@@ -126,6 +162,7 @@ const SignUp = () => {
                                     )}
                                 </button>
                             </div>
+                            {errors.password && <p className="text-[11px] text-red-500 mt-1">{errors.password.message}</p>}
                         </div>
 
                         {/* Terms & Conditions */}
@@ -158,7 +195,7 @@ const SignUp = () => {
                         </button>
                     </form>
 
-                    <div className="flex items-center my-6">
+                    <div className="flex items-center my-5">
                         <div className="flex-1 border-t border-neutral-900"></div>
                         <span className="px-3 text-[10px] uppercase tracking-widest text-neutral-600">or continue with</span>
                         <div className="flex-1 border-t border-neutral-900"></div>
@@ -167,26 +204,10 @@ const SignUp = () => {
                     {/* Social Authentication */}
                     <button type="button" className="w-full flex items-center justify-center gap-2.5 bg-[#121212] hover:bg-[#161616] border border-neutral-800 hover:border-neutral-700 text-xs font-medium text-white h-11 px-4 rounded-lg transition-all duration-200 active:scale-[0.99]">
                         <svg className="w-4 h-4" viewBox="0 0 24 24">
-                            <path
-                                fill="currentColor"
-                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                                fill="#4285F4"
-                            />
-                            <path
-                                fill="currentColor"
-                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                                fill="#34A853"
-                            />
-                            <path
-                                fill="currentColor"
-                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-                                fill="#FBBC05"
-                            />
-                            <path
-                                fill="currentColor"
-                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                                fill="#EA4335"
-                            />
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
                         </svg>
                         Sign up with Google
                     </button>
@@ -195,7 +216,7 @@ const SignUp = () => {
                 {/* Footer Link */}
                 <p className="text-center text-xs text-neutral-500 mt-6">
                     Already have an account?{' '}
-                    <a href="#login" className="text-white hover:text-indigo-400 font-medium transition-colors">
+                    <a href="/signin" className="text-white hover:text-indigo-400 font-medium transition-colors">
                         Sign in
                     </a>
                 </p>
